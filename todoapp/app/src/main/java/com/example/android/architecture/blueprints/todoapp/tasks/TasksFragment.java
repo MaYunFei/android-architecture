@@ -51,9 +51,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Display a grid of {@link Task}s. User can choose to view all, active or completed tasks.
+ *
+ * implements TasksContract.View 实现MVP中的View接口,这个View继承与BaseView 在TasksContract 中已经确认了Presenter类型
+ *
  */
 public class TasksFragment extends Fragment implements TasksContract.View {
 
+    //presenter 内部成员类 应该是跟随Activity 死亡就死亡，记得有些框架里Presenter 是静态的，需要手动去释放View
     private TasksContract.Presenter mPresenter;
 
     private TasksAdapter mListAdapter;
@@ -87,11 +91,13 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     @Override
     public void onResume() {
         super.onResume();
+        //在onResume 中启动 呼呼呼，司机发车了
         mPresenter.start();
     }
 
     @Override
     public void setPresenter(@NonNull TasksContract.Presenter presenter) {
+        //设置Presenter 问题是哪里会回调这个方法呢？ 在Presenter 实现类的内部，在Presenter 创建的同时调用，这说明View 先创建，再创建Presenter
         mPresenter = checkNotNull(presenter);
     }
 
@@ -104,6 +110,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //创建Fragment的View
         View root = inflater.inflate(R.layout.tasks_frag, container, false);
 
         // Set up tasks view
@@ -136,7 +143,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
             }
         });
 
-        // Set up progress indicator
+        // Set up progress indicator 下拉刷新
         final ScrollChildSwipeRefreshLayout swipeRefreshLayout =
                 (ScrollChildSwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
         swipeRefreshLayout.setColorSchemeColors(
@@ -228,10 +235,11 @@ public class TasksFragment extends Fragment implements TasksContract.View {
 
     @Override
     public void setLoadingIndicator(final boolean active) {
-
+        //调用 getView 判断Fragment view是否存在
         if (getView() == null) {
             return;
         }
+        //技巧使用 final 存储临时需要的 控件
         final SwipeRefreshLayout srl =
                 (SwipeRefreshLayout) getView().findViewById(R.id.refresh_layout);
 
@@ -352,6 +360,9 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         return isAdded();
     }
 
+    /**
+     * private static 内部类
+     */
     private static class TasksAdapter extends BaseAdapter {
 
         private List<Task> mTasks;

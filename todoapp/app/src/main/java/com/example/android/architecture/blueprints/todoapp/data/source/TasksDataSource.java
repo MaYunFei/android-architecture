@@ -24,11 +24,15 @@ import java.util.List;
 
 /**
  * Main entry point for accessing tasks data.
+ * 访问数据的主要入口
  * <p>
  * For simplicity, only getTasks() and getTask() have callbacks. Consider adding callbacks to other
  * methods to inform the user of network/database errors or successful operations.
  * For example, when a new task is created, it's synchronously stored in cache but usually every
  * operation on database or network should be executed in a different thread.
+ * 为了简单只有 getTasks() 和 getTask()
+ * 举个例子，当一个任务被创建的时候，它会同步到cache内存中但是通常的操作都是每个操作都是在数据库或者网络中，应该在不同的线程中执行
+ *
  */
 public interface TasksDataSource {
 

@@ -16,8 +16,6 @@
 
 package com.example.android.architecture.blueprints.todoapp.data.source;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -29,19 +27,24 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Concrete implementation to load tasks from the data sources into a cache.
  * <p>
  * For simplicity, this implements a dumb synchronisation between locally persisted data and data
  * obtained from the server, by using the remote data source only if the local database doesn't
  * exist or is empty.
+ * 实现了一个简单的 远程与本地数据同步的 存储
+ * 包装器模式
+ *
  */
 public class TasksRepository implements TasksDataSource {
 
     private static TasksRepository INSTANCE = null;
-
+    //远程数据
     private final TasksDataSource mTasksRemoteDataSource;
-
+    //本地数据
     private final TasksDataSource mTasksLocalDataSource;
 
     /**

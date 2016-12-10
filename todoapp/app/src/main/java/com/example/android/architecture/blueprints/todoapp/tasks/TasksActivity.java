@@ -73,6 +73,7 @@ public class TasksActivity extends AppCompatActivity {
 
         // Create the presenter
         mTasksPresenter = new TasksPresenter(
+                //注入Presenter 不过这里居然用的是具体类类型，没有用interface，这个用的是Application的Context
                 Injection.provideTasksRepository(getApplicationContext()), tasksFragment);
 
         // Load previously saved state, if available.

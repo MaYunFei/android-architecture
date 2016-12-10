@@ -99,7 +99,7 @@ public class TasksPresenter implements TasksContract.Presenter {
                     EspressoIdlingResource.decrement(); // Set app as idle.
                 }
 
-                // We filter the tasks based on the requestType
+                // We filter the tasks based on the requestType 根据类型过滤掉task
                 for (Task task : tasks) {
                     switch (mCurrentFiltering) {
                         case ALL_TASKS:
