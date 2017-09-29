@@ -48,11 +48,13 @@ public class TasksRepository implements TasksDataSource {
     private final TasksDataSource mTasksLocalDataSource;
 
     /**
+     * 缓存列表
      * This variable has package local visibility so it can be accessed from tests.
      */
     Map<String, Task> mCachedTasks;
 
     /**
+     * 是否修改
      * Marks the cache as invalid, to force an update the next time data is requested. This variable
      * has package local visibility so it can be accessed from tests.
      */

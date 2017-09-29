@@ -76,18 +76,25 @@ public class TasksPresenterTest {
                 new Task("Title2", "Description2", true), new Task("Title3", "Description3", true));
     }
 
+    /**
+     * 测试load功能
+     */
     @Test
     public void loadAllTasksFromRepositoryAndLoadIntoView() {
         // Given an initialized TasksPresenter with initialized tasks
         // When loading of Tasks is requested
+        //配置
         mTasksPresenter.setFiltering(TasksFilterType.ALL_TASKS);
         mTasksPresenter.loadTasks(true);
 
         // Callback is captured and invoked with stubbed tasks
+        // 模拟方法调用
         verify(mTasksRepository).getTasks(mLoadTasksCallbackCaptor.capture());
+        //设置回调值
         mLoadTasksCallbackCaptor.getValue().onTasksLoaded(TASKS);
 
         // Then progress indicator is shown
+        //验证顺序
         InOrder inOrder = inOrder(mTasksView);
         inOrder.verify(mTasksView).setLoadingIndicator(true);
         // Then progress indicator is hidden and all tasks are shown in UI
